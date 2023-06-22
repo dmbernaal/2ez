@@ -7,7 +7,7 @@ import os, io
 _supported_formats_ = ["mp3", "mp4", "mpeg", "mpga", "m4a", "wav", "webm"]
 
 # Convert m3u8 to mp4 -> blackboard uses m3u8
-def m3u8ToMP4(videoPath, framePath="output"): 
+def url2mp4(videoPath, framePath="output"): 
     subprocess.call(['ffmpeg', '-i', videoPath, '-c', 'copy', f"./_temp/{framePath}.mp4"])
     return "./_temp/output.mp4"
 
