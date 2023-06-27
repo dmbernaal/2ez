@@ -1,6 +1,6 @@
 import argparse
 import os
-from src.audio import url2mp4, split_audio, load_file_as_bytes
+from src.audio import url2mp4, split_audio, load_file_as_bytes, wget
 from src.whisper import transcribe_audio_chunks
 from src.vtt import VTT
 
@@ -10,12 +10,14 @@ if __name__ == "__main__":
     argparse.add_argument("--output", default="output.txt", type=str, required=True)
     argparse.add_argument("--verbose", default=True, type=bool, required=False)
     argparse.add_argument("--save-vtt", default=False, type=bool, required=False)
+    argparse.add_argument("--wget", default=False, type=bool, required=False)
 
     args = argparse.parse_args()
 
     # Download the m3u8 file
     if args.verbose: print("Downloading file...")
-    m3u8_file_path = url2mp4(args.url)
+    if args.wget: m3u8_file_path = wget(args.url)
+    else: m3u8_file_path = url2mp4(args.url)
 
     # load the m3u8 file as a byte stream
     if args.verbose: print("Loading file as a byte stream...")

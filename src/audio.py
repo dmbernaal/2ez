@@ -7,9 +7,15 @@ import os, io
 _supported_formats_ = ["mp3", "mp4", "mpeg", "mpga", "m4a", "wav", "webm"]
 
 # Convert m3u8 to mp4 -> blackboard uses m3u8
-def url2mp4(videoPath, framePath="output"): 
-    subprocess.call(['ffmpeg', '-i', videoPath, '-c', 'copy', f"./_temp/{framePath}.mp4"])
-    return "./_temp/output.mp4"
+def url2mp4(videoPath, framePath="output"):
+    output = framePath + ".mp4" if not framePath.endswith(".mp4") else framePath
+    subprocess.call(['ffmpeg', '-i', videoPath, '-c', 'copy', f"./_temp/{output}"])
+    return f"./_temp/{output}"
+
+def wget(url, framePath="output"):
+    output = framePath + ".mp4" if not framePath.endswith(".mp4") else framePath
+    subprocess.call(['wget', url, '-O', output])
+    return f"./_temp/{output}"
 
 # Convert video to audio
 def video2audio(video_path, audio_path, audio_format="mp3"):
